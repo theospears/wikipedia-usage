@@ -102,11 +102,11 @@ function mapValues(hash, mapFunction) {
 	return result;
 }
 
-function valueTuples(hash) {
+function toDayValuePairs(hash) {
 	result = []
 	for(var name in hash) {
 		if(hash.hasOwnProperty(name)) {
-				result.push([hash[name]]);
+				result.push([name.replace(/.*-/,''), hash[name]]);
 		}
 	}
 	return result;
@@ -137,16 +137,16 @@ function setInnerText(elementId, contents) {
 
 function renderHash(hash, containerId) {
 		var data = new google.visualization.DataTable();
-		//data.addColumn('string', 'date');
+		data.addColumn('string', 'date');
 		data.addColumn('number', 'pageviews');
 
-		data.addRows(valueTuples(hash));
+		data.addRows(toDayValuePairs(hash));
 		var width = document.getElementById(containerId).offsetWidth;
 
 		var wrapper = new google.visualization.ChartWrapper({
 			chartType: 'ImageChart',
 			dataTable: data,
-			options: { cht: 'bvg', width: width, legend: 'none', chxt: 'y', chco: '76A4FB', chxs: '0,,0,0,_' },
+			options: { cht: 'bvg', width: width, legend: 'none', chxt: 'x,y', chxs: '1,,0,0,_'  },
 			containerId: containerId
 		});
 		wrapper.draw();
