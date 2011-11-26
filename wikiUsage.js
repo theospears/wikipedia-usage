@@ -17,11 +17,95 @@ Array.prototype.distinct = function() {
 			result.push(this[i]);
 		}
 	}
-	console.log(result);
+	return result;
+}
+
+Array.prototype.forEach = function(action) {
+	for(var i = 0; i < this.length; i++) {
+		action(this[i]);
+	}
+}
+
+Array.prototype.group = function(groupFunction, groupNames) {
+	groups = {}
+	if(groupNames !== undefined) {
+		groupNames.forEach(function(it) {
+			groups[it] = [];
+		});
+	}
+
+	this.forEach(function(it) {
+		var key = groupFunction(it);
+		if(key in groups) {
+			groups[key].push(it);
+		} else if(groupNames === undefined) {
+			groups[key] = [it]; 
+		}
+	});
+	return groups;
+}
+
+Array.prototype.sum = function() {
+	var total = 0;
+	this.forEach(function(it) {
+		total += it;
+	});
+	return total;
+}
+
+Array.prototype.max = function() {
+	var max = this[0];
+	this.forEach(function(it) {
+		if(max < it) {
+			max = it;
+		}
+	});
+	return max;
+}
+
+Array.prototype.toHash = function() {
+	var result = {};
+	this.forEach(function(obj){
+		if(!(obj instanceof Array)) {
+			throw "Contains non array value";
+		}
+		if(obj.length != 2) {
+			throw "Sub-array not of the correct length";
+		}
+		if(obj[0] in result) {
+			throw "Duplicate key found";
+		}
+		result[obj[0]] = obj[1];
+	});
 	return result;
 }
 
 /* END Array Functions */
+
+/* BEGIN Object functions */
+
+function mapValues(it, mapFunction) {
+	result = {};
+	result.__proto__ = it.__proto__;
+	for(var name in it) {
+		if(it.hasOwnProperty(name)) {
+				result[name] = mapFunction(it[name]);
+		}
+	}
+	return result;
+}
+
+function asPairs(it) {
+	results = [];
+	for(var name in it) {
+		if(it.hasOwnProperty(name)) {
+				results.push([name, it[name]]);
+		}
+	}
+	return results;
+}
+
+/* END Object functions */
 
 function parseUri (str) {
 	var	o   = parseUri.options,
@@ -71,7 +155,6 @@ function getWikipediaVisits(callback) {
 				var path = parsedUrl.path;
 				if(host.match(/(^|\.)wikipedia\.org$/) && path.match(/^\/wiki\//)) {
 					wikiItems.push(historyItems[i]);
-					console.log(path)
 				} 
 			}
 			callback(wikiItems);
@@ -102,31 +185,6 @@ function getRecentDates() {
 	return recentDates;
 }
 
-function assignToBuckets(bucketNames, objects, bucketChoiceFunction) {
-	buckets = {}
-	for(var i = 0; i < bucketNames.length; i++) {
-		buckets[bucketNames[i]] = [];
-	}
-
-	for(var objectIndex = 0; objectIndex < objects.length; objectIndex++) {
-		var key = bucketChoiceFunction(objects[objectIndex]);
-		if(key in buckets) {
-			buckets[key].push(objects[objectIndex]);
-		}
-	}
-
-	return buckets;
-}
-
-function mapValues(hash, mapFunction) {
-	result = {}
-	for(var name in hash) {
-		if(hash.hasOwnProperty(name)) {
-				result[name] = mapFunction(hash[name]);
-		}
-	}
-	return result;
-}
 
 function toDayValuePairs(hash) {
 	result = []
@@ -170,12 +228,34 @@ function renderHash(hash, containerId) {
 		wrapper.draw();
 }
 
+function setFrequentArticles(articles) {
+	var mostPopularList = document.getElementById('mostPopularList');
+	var maxReads = articles[0][1];
+	articles.forEach(function(it) {
+		var popArticle = document.createElement('div');
+		popArticle.setAttribute('class', 'popularArticle');
+		popArticle.innerHTML = 
+							'<div class="horizontalBarContainer">' +
+							'	<div class="horizontalBar" style="width: ' + (it[1]*100/maxReads) + '%">&nbsp;</div>' +
+							'</div>' +
+							'<div class="articleTitle">' +
+							'	<a href="' + it[0] +'">' + it[0].replace(/.*\//,'').replace('_',' ') + '</a>' +
+							'</div>';
+		mostPopularList.appendChild(popArticle);
+	});
+}
+
+function setRecentArticles(articles) {
+	articles.forEach(function(it) {
+		console.log(it[0] + ":" + it[1]);
+	});
+}
+
 function renderWikiUsage() {
 	getWikipediaVisits(function(visits){
-		var usageByDay = assignToBuckets(
-			getRecentDates(),
-			visits,
-			function(visit) { return dateOnly(visit.lastVisitTime) });
+		var usageByDay = visits.group(
+			function(visit) { return dateOnly(visit.lastVisitTime) },
+			getRecentDates());
 		var usageCountsByDay = mapValues(usageByDay, function(visits){return visits.length;});
 
 		renderHash(usageCountsByDay, 'graphDaysLastMonth');
@@ -183,6 +263,21 @@ function renderWikiUsage() {
 		var articlesRead = visits.map(function(v){return v.url.replace(/#.*/,'');}).distinct().length
 		setInnerText('numArticlesRead', articlesRead);
 		setInnerText('donationAmount', (articlesRead * 0.05).toFixed(2));
-		
+
+		var equivArticles = visits.group(function(v){return v.url.replace(/#.*/,'');});
+		var frequencies = asPairs(mapValues(
+			equivArticles,
+			function(values) { return values.map(function(v){return v.visitCount; }).sum(); }));
+		frequencies.sort(function(a,b) { return b[1] - a[1] });
+
+		setFrequentArticles(frequencies.slice(0,5));
+
+		var mostRecent = asPairs(mapValues(
+			equivArticles,
+			function(values) { return values.map(function(v){return v.lastVisitTime; }).max(); }));
+		mostRecent.sort(function(a,b) { return b[1] - a[1] });
+
+		setRecentArticles(mostRecent.slice(0,5));
 	});
+	
 }
