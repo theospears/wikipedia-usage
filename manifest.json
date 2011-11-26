@@ -1,0 +1,10 @@
+{
+  "name": "Wikipedia Usage",
+  "version": "0.1",
+  "description": "Illustrates how much content from wikipedia you read",
+  "permissions": ["history", "tabs"],
+  "browser_action": {
+    "default_icon": "clock.png"
+  },
+	"background_page": "background.html"
+}
