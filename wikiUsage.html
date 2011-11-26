@@ -1,9 +1,101 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Recently Typed URLs</title>
+    <title>Wikipedia Usage</title>
     <style>
-      body {min-width: 250px;}
+			.clear { clear:both; }
+      body {min-width: 600px;}
+			div.maingraph {
+				width: 80%;
+				height: 200px;
+				margin-top: 60px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.articlesReadBanner {
+				text-align: center;
+				font-size: 2.5em;
+				margin-top: 25px;
+				margin-bottom: 30px;
+			}
+
+			.mostPopularSection {
+				float: left;
+				width: 50%;
+				margin: 0;
+				padding: 0;
+			}
+			.mostRecentSection {
+				float: right;
+				width: 50%;
+				margin: 0;
+				padding: 0;
+			}
+
+			.pad75 {
+				width: 75%;
+				margin: auto;
+			}
+
+			h2 {
+				font-weight: normal;
+				border-bottom: 1px solid black;
+			}
+
+			div.mostPopularList {
+				margin: 20px;
+			}
+
+			div.popularArticle,
+			div.recentArticle {
+				padding: 0;
+				margin-bottom: 4px;
+				height: 21px;
+			}
+
+			a:link, a:visited {
+				color: #3654FB;
+			}
+
+			div.horizontalBarContainer {
+				width: 30%;
+				display: inline-block;
+			}
+			div.horizontalBar {
+				background: #76A4FB;
+				height: 3ex;
+				margin-right: 0;
+				margin-left: auto;
+			}
+			div.articleTitle {
+				display: inline-block;
+				margin-left: 10px;
+			}
+			div.articleDate {
+				width: 20%;
+				display: inline-block;
+				text-align: right;
+				color: #444;
+				font-size: 90%;
+			}
+			.donationSuggestion {
+				text-align: center;
+				font-size: 1.1em;
+				margin-top: 70px;
+			}
+			.donationLink {
+				text-align: center;
+				font-size: 2em;
+				margin: 10px;
+			}
+			.donationLink a {
+				text-decoration: none;
+				font-family: sans-serif;
+			}
+			.donationLink a:hover {
+				text-decoration: underline;
+			}
     </style>
 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 		<script type="text/javascript">
@@ -13,7 +105,115 @@
   </head>
 
   <body onload='renderWikiUsage()' >
-    <h2>Usage of wikipedia</h2>
-    <div id='graphDaysLastMonth'></div>
+
+    <div id='graphDaysLastMonth' class="maingraph"></div>
+		<div class="articlesReadBanner">
+			Total Wikipedia articles you have read this month: 
+			<span id="numArticlesRead">97</span>
+		</div>
+
+		<div class="detailsSection">
+			<div class="mostPopularSection">
+				<div class="pad75">
+					<h2>Most read articles</h2>
+					<div class="mostPopularList">
+						<div class="popularArticle">
+							<div class="horizontalBarContainer">
+								<div class="horizontalBar" style="width: 100%">&nbsp;</div>
+							</div>
+							<div class="articleTitle">
+								<a href="#">Kittens</a>
+							</div>
+						</div>
+						<div class="popularArticle">
+							<div class="horizontalBarContainer">
+								<div class="horizontalBar" style="width: 70%">&nbsp;</div>
+							</div>
+							<div class="articleTitle">
+								<a href="#">The United Kingdom of Great Britain</a>
+							</div>
+						</div>
+						<div class="popularArticle">
+							<div class="horizontalBarContainer">
+								<div class="horizontalBar" style="width: 70%">&nbsp;</div>
+							</div>
+							<div class="articleTitle">
+								<a href="#">Strange Units</a>
+							</div>
+						</div>
+						<div class="popularArticle">
+							<div class="horizontalBarContainer">
+								<div class="horizontalBar" style="width: 30%">&nbsp;</div>
+							</div>
+							<div class="articleTitle">
+								<a href="#">Men</a>
+							</div>
+						</div>
+						<div class="popularArticle">
+							<div class="horizontalBarContainer">
+								<div class="horizontalBar" style="width: 30%">&nbsp;</div>
+							</div>
+							<div class="articleTitle">
+								<a href="#">Time</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mostRecentSection">
+				<div class="pad75">
+					<h2>Most recent articles</h2>
+					<div class="mostRecentList">
+						<div class="recentArticle">
+							<div class="articleDate">
+								4:00 pm
+							</div>
+							<div class="articleTitle">
+								<a href="#">Cats</a>
+							</div>
+						</div>
+						<div class="recentArticle">
+							<div class="articleDate">
+								3:52 pm
+							</div>
+							<div class="articleTitle">
+								<a href="#">Strange Spots</a>
+							</div>
+						</div>
+						<div class="recentArticle">
+							<div class="articleDate">
+								Yesterday
+							</div>
+							<div class="articleTitle">
+								<a href="#">Large animals</a>
+							</div>
+						</div>
+						<div class="recentArticle">
+							<div class="articleDate">
+								Yesterday
+							</div>
+							<div class="articleTitle">
+								<a href="#">Earthquakes</a>
+							</div>
+						</div>
+						<div class="recentArticle">
+							<div class="articleDate">
+								Monday
+							</div>
+							<div class="articleTitle">
+								<a href="#">The United Kingdom of Great Britain</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="donationSuggestion">We suggest donating 5&cent; for each article you read</div>
+		<div class="donationLink"><a href="#">Donate $<span id="donateAmount">4.85</span> to Wikipedia</a></div>
+
   </body>
 </html>
