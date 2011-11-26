@@ -102,7 +102,7 @@ function mapValues(hash, mapFunction) {
 	return result;
 }
 
-function hashToTuples(hash) {
+function valueTuples(hash) {
 	result = []
 	for(var name in hash) {
 		if(hash.hasOwnProperty(name)) {
@@ -110,15 +110,37 @@ function hashToTuples(hash) {
 		}
 	}
 	return result;
-
 }
+
+function values(hash) {
+	result = []
+	for(var name in hash) {
+		if(hash.hasOwnProperty(name)) {
+				result.push(hash[name]);
+		}
+	}
+	return result;
+}
+
+function sum(arr) {
+	total = 0;
+	for(var i = 0; i < arr.length; i++) {
+		total += arr[i];
+	}
+	return total;
+}
+
+function setInnerText(elementId, contents) {
+	document.getElementById(elementId).innerText = contents;
+}
+
 
 function renderHash(hash, containerId) {
 		var data = new google.visualization.DataTable();
 		//data.addColumn('string', 'date');
 		data.addColumn('number', 'pageviews');
 
-		data.addRows(hashToTuples(hash));
+		data.addRows(valueTuples(hash));
 		var width = document.getElementById(containerId).offsetWidth;
 
 		var wrapper = new google.visualization.ChartWrapper({
@@ -139,5 +161,10 @@ function renderWikiUsage() {
 		var usageCountsByDay = mapValues(usageByDay, function(visits){return visits.length;});
 
 		renderHash(usageCountsByDay, 'graphDaysLastMonth');
+
+		var articlesRead = sum(values(usageCountsByDay));
+		setInnerText('numArticlesRead', articlesRead);
+		setInnerText('donationAmount', (articlesRead * 0.05).toFixed(2));
+		
 	});
 }
