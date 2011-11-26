@@ -1,3 +1,28 @@
+/* BEGIN Array Functions */
+
+Array.prototype.map = function(transformation) {
+	var results = [];
+	for(var i = 0; i < this.length; i++) {
+		results.push(transformation(this[i]));
+	}
+	return results;
+}
+
+Array.prototype.distinct = function() {
+	var result = [];
+	var set = {}
+	for(var i = 0; i < this.length; i++) {
+		if(!(this[i] in set)) {
+			set[this[i]] = true;
+			result.push(this[i]);
+		}
+	}
+	console.log(result);
+	return result;
+}
+
+/* END Array Functions */
+
 function parseUri (str) {
 	var	o   = parseUri.options,
 		m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
@@ -46,6 +71,7 @@ function getWikipediaVisits(callback) {
 				var path = parsedUrl.path;
 				if(host.match(/(^|\.)wikipedia\.org$/) && path.match(/^\/wiki\//)) {
 					wikiItems.push(historyItems[i]);
+					console.log(path)
 				} 
 			}
 			callback(wikiItems);
@@ -122,14 +148,6 @@ function values(hash) {
 	return result;
 }
 
-function sum(arr) {
-	total = 0;
-	for(var i = 0; i < arr.length; i++) {
-		total += arr[i];
-	}
-	return total;
-}
-
 function setInnerText(elementId, contents) {
 	document.getElementById(elementId).innerText = contents;
 }
@@ -162,7 +180,7 @@ function renderWikiUsage() {
 
 		renderHash(usageCountsByDay, 'graphDaysLastMonth');
 
-		var articlesRead = sum(values(usageCountsByDay));
+		var articlesRead = visits.map(function(v){return v.url.replace(/#.*/,'');}).distinct().length
 		setInnerText('numArticlesRead', articlesRead);
 		setInnerText('donationAmount', (articlesRead * 0.05).toFixed(2));
 		
