@@ -13,21 +13,21 @@
 
 function humaneDate(date, compareTo){
     var lang = {
-            ago: 'Ago',
-            from: 'From Now',
-            now: 'Just Now',
-            minute: 'Minute',
-            minutes: 'Minutes',
-            hour: 'Hour',
-            hours: 'Hours',
-            day: 'Day',
-            days: 'Days',
-            week: 'Week',
-            weeks: 'Weeks',
-            month: 'Month',
-            months: 'Months',
-            year: 'Year',
-            years: 'Years'
+            ago: 'ago',
+            from: 'from now',
+            now: 'just now',
+            minute: 'minute',
+            minutes: 'minutes',
+            hour: 'hour',
+            hours: 'hours',
+            day: 'day',
+            days: 'days',
+            week: 'week',
+            weeks: 'weeks',
+            month: 'month',
+            months: 'months',
+            year: 'year',
+            years: 'years'
         },
         formats = [
             [60, lang.now],
