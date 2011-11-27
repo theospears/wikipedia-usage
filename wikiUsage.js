@@ -239,7 +239,8 @@ function setFrequentArticles(articles) {
 		popArticle.setAttribute('class', 'popularArticle');
 		popArticle.innerHTML = 
 							'<div class="horizontalBarContainer">' +
-							'	<div class="horizontalBar" style="width: ' + (it[1]*100/maxReads) + '%">&nbsp;</div>' +
+							'	<div class="horizontalBar" style="width: ' + (it[1]*80/maxReads) + '%">&nbsp;</div>' +
+							' <div class="articleReads">' + it[1] + '</div>' + 
 							'</div>' +
 							'<div class="articleTitle">' +
 							'	<a href="' + it[0] +'">' + it[0].replace(/.*\//,'').replace(/_/g,' ') + '</a>' +
