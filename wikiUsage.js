@@ -249,8 +249,19 @@ function setFrequentArticles(articles) {
 }
 
 function setRecentArticles(articles) {
+	var mostRecentList = document.getElementById('mostRecentList');
 	articles.forEach(function(it) {
-		console.log(it[0] + ":" + it[1]);
+		var recentArticle = document.createElement('div');
+		recentArticle.setAttribute('class', 'recentArticle');
+		console.log(it);
+		recentArticle.innerHTML = 
+							'<div class="articleDate">' + 
+							humaneDate(new Date(it[1])) + 
+							'</div>' + 
+							'<div class="articleTitle">' + 
+							'	<a href="' + it[0] + '">' + it[0].replace(/.*\//,'').replace('_',' ') + '</a>' + 
+							'</div>'
+		mostRecentList.appendChild(recentArticle);
 	});
 }
 
