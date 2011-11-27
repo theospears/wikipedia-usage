@@ -218,6 +218,9 @@ function renderHash(hash, containerId) {
 
 		data.addRows(toDayValuePairs(hash));
 		var width = document.getElementById(containerId).offsetWidth;
+		if(width > 1000) {
+			width = 1000;
+		}
 
 		var wrapper = new google.visualization.ChartWrapper({
 			chartType: 'ImageChart',
