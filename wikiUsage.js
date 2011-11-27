@@ -242,7 +242,7 @@ function setFrequentArticles(articles) {
 							'	<div class="horizontalBar" style="width: ' + (it[1]*100/maxReads) + '%">&nbsp;</div>' +
 							'</div>' +
 							'<div class="articleTitle">' +
-							'	<a href="' + it[0] +'">' + it[0].replace(/.*\//,'').replace('_',' ') + '</a>' +
+							'	<a href="' + it[0] +'">' + it[0].replace(/.*\//,'').replace(/_/g,' ') + '</a>' +
 							'</div>';
 		mostPopularList.appendChild(popArticle);
 	});
@@ -259,7 +259,7 @@ function setRecentArticles(articles) {
 							humaneDate(new Date(it[1])) + 
 							'</div>' + 
 							'<div class="articleTitle">' + 
-							'	<a href="' + it[0] + '">' + it[0].replace(/.*\//,'').replace('_',' ') + '</a>' + 
+							'	<a href="' + it[0] + '">' + it[0].replace(/.*\//,'').replace(/_/g,' ') + '</a>' + 
 							'</div>'
 		mostRecentList.appendChild(recentArticle);
 	});
