@@ -1,0 +1,102 @@
+.clear { clear:both; }
+body {min-width: 600px;}
+div.maingraph {
+	width: 80%;
+	height: 200px;
+	text-align: center;
+	margin-top: 60px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.articlesReadBanner {
+	text-align: center;
+	font-size: 2.5em;
+	margin-top: 25px;
+	margin-bottom: 30px;
+}
+
+.mostPopularSection {
+	float: left;
+	width: 50%;
+	margin: 0;
+	padding: 0;
+}
+.mostRecentSection {
+	float: right;
+	width: 50%;
+	margin: 0;
+	padding: 0;
+}
+
+.pad75 {
+	width: 75%;
+	margin: auto;
+}
+
+h2 {
+	font-weight: normal;
+	border-bottom: 1px solid black;
+}
+
+div.mostPopularList {
+	margin: 20px;
+}
+
+div.popularArticle,
+div.recentArticle {
+	padding: 0;
+	margin-bottom: 4px;
+	height: 21px;
+}
+
+a:link, a:visited {
+	color: #3654FB;
+}
+
+div.horizontalBarContainer {
+	width: 30%;
+	display: inline-block;
+}
+div.articleReads {
+	float: right;
+	margin-right: 5px;
+	font-size: 60%;
+	color: #444;
+	vertical-align: center;
+	margin-top: 1.7ex;
+}
+div.horizontalBar {
+	float: right;
+	background: #76A4FB;
+	height: 1ex;
+	margin-top: 1.7ex;
+}
+div.articleTitle {
+	display: inline-block;
+	margin-left: 10px;
+}
+div.articleDate {
+	width: 20%;
+	display: inline-block;
+	text-align: right;
+	color: #444;
+	font-size: 90%;
+}
+.donationSuggestion {
+	text-align: center;
+	font-size: 1.1em;
+	margin-top: 70px;
+}
+.donationLink {
+	text-align: center;
+	font-size: 2em;
+	margin: 10px;
+}
+.donationLink a {
+	text-decoration: none;
+	font-family: sans-serif;
+}
+.donationLink a:hover {
+	text-decoration: underline;
+}
