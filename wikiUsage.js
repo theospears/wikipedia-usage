@@ -210,6 +210,10 @@ function setInnerText(elementId, contents) {
 	document.getElementById(elementId).innerText = contents;
 }
 
+function setValue(elementId, value) {
+	document.getElementById(elementId).value = value;
+}
+
 
 function renderHash(hash, containerId) {
 		var data = new google.visualization.DataTable();
@@ -276,8 +280,14 @@ function renderWikiUsage() {
 		renderHash(usageCountsByDay, 'graphDaysLastMonth');
 
 		var articlesRead = visits.map(function(v){return v.url.replace(/#.*/,'');}).distinct().length
+		var donation = (articlesRead * 0.05).toFixed(2);
 		setInnerText('numArticlesRead', articlesRead);
-		setInnerText('donationAmount', (articlesRead * 0.05).toFixed(2));
+		setInnerText('donationAmount', donation);
+		setValue('donationAmountField', donation);
+
+		document.getElementById('donationLink').addEventListener('click', function() {
+			document.getElementById('donateForm').submit();
+		});
 
 		var equivArticles = visits.group(function(v){return v.url.replace(/#.*/,'');});
 		var frequencies = asPairs(mapValues(

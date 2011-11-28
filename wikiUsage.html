@@ -40,7 +40,18 @@
 		<div class="clear"></div>
 
 		<div class="donationSuggestion">We suggest donating 5&cent; for each article you read</div>
-		<div class="donationLink"><a href="#">Donate $<span id="donationAmount"></span> to Wikipedia</a></div>
+
+		<form id="donateForm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_xclick">
+			<input type="hidden" name="business" value="paypal@wikimedia.org.uk">
+			<input type="hidden" name="item_name" value="Donation to Wikimedia UK">
+			<input type="hidden" name="currency_code" value="USD">
+			<input type="hidden" name="custom" value="">
+			<input type="hidden" name="return" value="http://uk.wikimedia.org/wiki/Thanks">
+			<input type="hidden" name="amount" value="" id="donationAmountField">
+		</form>
+
+		<div class="donationLink"><a href="#" id="donationLink">Donate $<span id="donationAmount"></span> to Wikipedia</a></div>
 
   </body>
 </html>
